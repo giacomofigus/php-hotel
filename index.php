@@ -10,7 +10,6 @@
     // Se non viene specificato nessun filtro, visualizzare come in precedenza tutti gli hotel.
 
     $hotels = [
-
         [
             'name' => 'Hotel Belvedere',
             'description' => 'Hotel Belvedere Descrizione',
@@ -59,6 +58,36 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.css' integrity='sha512-VcyUgkobcyhqQl74HS1TcTMnLEfdfX6BbjhH8ZBjFU9YTwHwtoRtWSGzhpDVEJqtMlvLM2z3JIixUOu63PNCYQ==' crossorigin='anonymous'/>
 </head>
 <body>
+    <div
+        class="table-responsive p-5"
+    >
+        <table
+            class="table table-primary"
+        >
+            <thead>
+                <tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Parking</th>
+                    <th>Vote</th>
+                    <th>Distance to Center</th>
+                </tr>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach($hotels as $hotel): ?>
+                <tr>
+                    <td><?php echo $hotel['name']; ?></td>
+                    <td><?php echo $hotel['description']; ?></td>
+                    <td><?php echo $hotel['parking'] ? 'Yes' : 'No'; ?></td>
+                    <td><?php echo $hotel['vote']; ?></td>
+                    <td><?php echo $hotel['distance_to_center']; ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     
 </body>
 </html>
