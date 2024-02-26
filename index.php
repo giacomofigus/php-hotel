@@ -1,8 +1,8 @@
 <?php
     // Stampare tutti i nostri hotel con tutti i dati disponibili.
     // Iniziate in modo graduale.
-    // Prima stampate in pagina i dati, senza preoccuparvi dello stile.
-    // Dopo aggiungete Bootstrap e mostrate le informazioni con una tabella.
+    // Prima stampate in pagina i dati, senza preoccuparvi dello stile. ✔ 
+    // Dopo aggiungete Bootstrap e mostrate le informazioni con una tabella. ✔
     // Bonus:
     // 1 - Aggiungere un form ad inizio pagina che tramite una richiesta GET permetta di filtrare gli hotel che hanno un parcheggio.
     // 2 - Aggiungere un secondo campo al form che permetta di filtrare gli hotel per voto (es. inserisco 3 ed ottengo tutti gli hotel che hanno un voto di tre stelle o superiore)
@@ -47,6 +47,29 @@
         ],
 
     ];
+
+    $filteredHotels = [];
+
+    if(isset($_GET['parking']) && $_GET['parking'] !== 'Parking'){ 
+        if($_GET['parking'] === "Yes"){
+            foreach($hotels as $element){
+                if($element['parking'] === true){
+                    $filteredHotels[] = $element;
+                }
+            }
+        } else{
+            foreach($hotels as $element){
+                if($element['parking'] === false){
+                    $filteredHotels[] = $element;
+                }
+            }
+        }
+    }
+
+
+
+
+    
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +81,28 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.css' integrity='sha512-VcyUgkobcyhqQl74HS1TcTMnLEfdfX6BbjhH8ZBjFU9YTwHwtoRtWSGzhpDVEJqtMlvLM2z3JIixUOu63PNCYQ==' crossorigin='anonymous'/>
 </head>
 <body>
+
+    <div class="px-5 pt-3">
+        <h2>Cerca Hotel</h2>
+        <form class="mt-4" action="index.php" method="GET">
+            <select class="me-2" name="parking" id="parking">
+                <option value="Parking" >Parking</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            <!-- <select name="voto" id="voto">
+                <option value="Voto">Voto</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select> -->
+            <button type="submit" class="btn btn-primary mt-3">Cerca</button>
+        </form>
+    </div>
+
+
     <div
         class="table-responsive p-5"
     >
@@ -66,17 +111,15 @@
         >
             <thead>
                 <tr>
-                <tr>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Parking</th>
                     <th>Vote</th>
                     <th>Distance to Center</th>
                 </tr>
-                </tr>
             </thead>
             <tbody>
-            <?php foreach($hotels as $hotel): ?>
+            <?php foreach($filteredHotels as $hotel): ?>
                 <tr>
                     <td><?php echo $hotel['name']; ?></td>
                     <td><?php echo $hotel['description']; ?></td>
